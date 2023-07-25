@@ -1,7 +1,16 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post, Req} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import {UserService} from "./user.service";
-import {UserCreateDto} from "./dto/user.dto";
+import { UserService } from './user.service';
+import { UserCreateDto } from './dto/user.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -14,10 +23,7 @@ export class UserController {
   }
 
   @Post('account/create')
-  async createUserAccount(
-      @Req() req: any,
-      @Body() body: UserCreateDto,
-  ) {
+  async createUserAccount(@Req() req: any, @Body() body: UserCreateDto) {
     // console.log('controller');
     return this.userService.createUser(body);
   }
@@ -34,9 +40,7 @@ export class UserController {
   async updateUserProfile() {}
 
   @Get(':userId')
-  async getUserProfile(
-      @Param('userId') id: string,
-  ) {
+  async getUserProfile(@Param('userId') id: string) {
     return this.userService.getOneUserAccount(id);
   }
 }
