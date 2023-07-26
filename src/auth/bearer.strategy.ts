@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
 import { User } from '../user/user.entity';
 
 @Injectable()
-export class BearerStrategy extends PassportStrategy(Strategy, ' bearer') {
+export class BearerStrategy extends PassportStrategy(Strategy, 'bearer') {
   constructor(
     private readonly jwtService: JwtService,
     private readonly authService: AuthService,
