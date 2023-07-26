@@ -8,14 +8,17 @@ import { AnimalController } from './animal/animal.controller';
 import { AnimalModule } from './animal/animal.module';
 import { UserService } from './user/user.service';
 import { TypeOrmConfiguration } from './config/database/type-orm-configuration';
+import {AuthModule} from "./auth/auth.module";
+import {PassportModule} from "@nestjs/passport";
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync(TypeOrmConfiguration.config),
     UserModule,
     AnimalModule,
+    AuthModule,
   ],
-  controllers: [AppController, UserController, AnimalController],
-  providers: [AppService, UserService],
+  controllers: [AppController, AnimalController],
+  providers: [AppService],
 })
 export class AppModule {}
