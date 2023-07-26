@@ -21,7 +21,6 @@ export class BearerStrategy extends PassportStrategy(Strategy, 'bearer') {
 
   async validate(token: string): Promise<User> {
     let user = null;
-    console.log('12');
     try {
       await this.jwtService.verifyAsync(token);
       const decodeToken: any = this.jwtService.decode(token);
