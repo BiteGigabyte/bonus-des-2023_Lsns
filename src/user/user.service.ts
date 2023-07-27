@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserCreateDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
+import { Repository } from 'typeorm';
+
 import { AuthService } from '../auth/auth.service';
+import { UserCreateDto } from './dto/user.dto';
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,6 @@ export class UserService {
   ) {}
 
   async getAllUsers(): Promise<User[]> {
-    console.log('12');
     return this.userRepository.find();
   }
 
@@ -44,6 +44,7 @@ export class UserService {
   }
 
   async getOneUserAccount(userId: string) {
+    console.log(userId);
     // const user = this.users.find((item) => item.id === userId);
     return 'user';
   }

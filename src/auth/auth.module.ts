@@ -1,10 +1,9 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from '../user/user.module';
-import { UserService } from '../user/user.service';
-import { PassportModule } from '@nestjs/passport';
-import { User } from '../user/user.entity';
+import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { BearerStrategy } from './bearer.strategy';
 
@@ -28,9 +27,8 @@ import { BearerStrategy } from './bearer.strategy';
         },
       }),
     }),
-    forwardRef(() => UserModule),
   ],
-  providers: [AuthService, BearerStrategy, UserService],
+  providers: [AuthService, BearerStrategy],
   exports: [PassportModule, AuthService],
 })
 export class AuthModule {}

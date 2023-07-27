@@ -9,10 +9,11 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { UserService } from './user.service';
-import { UserCreateDto } from './dto/user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
+
+import { UserCreateDto } from './dto/user.dto';
+import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')
