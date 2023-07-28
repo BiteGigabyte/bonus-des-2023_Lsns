@@ -26,6 +26,7 @@ export class BearerStrategy extends PassportStrategy(Strategy, 'bearer') {
       const decodeToken: any = this.jwtService.decode(token);
       user = await this.authService.validateUser(decodeToken);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(
         new Date().toISOString(),
         ' [JWT USER VERIFY ERROR] ',

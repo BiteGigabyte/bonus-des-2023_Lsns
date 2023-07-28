@@ -44,6 +44,7 @@ export class AuthService {
     try {
       return this.jwtService.decode(token);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(
         new Date().toISOString(),
         ' [JWT VERIFY ERROR] ',

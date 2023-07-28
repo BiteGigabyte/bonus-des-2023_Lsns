@@ -23,3 +23,8 @@ async function bootstrap() {
   await app.listen(3000);
 }
 bootstrap();
+
+//  redis
+//  google login
+//  2FA
+//  relation (join)
