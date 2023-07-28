@@ -1,4 +1,5 @@
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
+
 import { PostgresqlConfigModule } from './config.module';
 import { PostgresqlConfigService } from './configuration.service';
 

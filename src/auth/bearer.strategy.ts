@@ -4,8 +4,8 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-http-bearer';
 import { ExtractJwt } from 'passport-jwt';
 
-import { AuthService } from './auth.service';
 import { User } from '../user/user.entity';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class BearerStrategy extends PassportStrategy(Strategy, 'bearer') {
