@@ -19,7 +19,11 @@ import {
   PaginatedDto,
 } from '../common/pagination/response';
 import { PublicUserInfoDto } from '../common/query/user.query.dto';
-import {UserCreateDto, UserloginDto, UserloginSocialDto} from './dto/user.dto';
+import {
+  UserCreateDto,
+  UserloginDto,
+  UserloginSocialDto,
+} from './dto/user.dto';
 import { PublicUserData } from './interface/user.interface';
 import { UserService } from './user.service';
 
