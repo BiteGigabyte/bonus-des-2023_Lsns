@@ -19,7 +19,7 @@ import {
   PaginatedDto,
 } from '../common/pagination/response';
 import { PublicUserInfoDto } from '../common/query/user.query.dto';
-import { UserCreateDto } from './dto/user.dto';
+import {UserCreateDto, UserloginDto, UserloginSocialDto} from './dto/user.dto';
 import { PublicUserData } from './interface/user.interface';
 import { UserService } from './user.service';
 
@@ -37,7 +37,7 @@ export class UserController {
   }
 
   @ApiResponse({ status: HttpStatus.CREATED, type: UserCreateDto })
-  @Post('account/create')
+  @Post(':userId/create')
   async createUserAccount(@Req() req: any, @Body() body: UserCreateDto) {
     return this.userService.createUser(body);
   }
@@ -45,6 +45,16 @@ export class UserController {
   @Post('account/:userId/animal')
   async addAnimalToUser() {
     return 'New User';
+  }
+
+  @Post('login')
+  async loginUser(@Body() body: UserloginDto) {
+    return this.userService.login(body);
+  }
+
+  @Post('social/login')
+  async loginSocialUser(@Body() body: UserloginSocialDto) {
+    return this.userService.loginSocail(body);
   }
 
   @Delete(':userId')
