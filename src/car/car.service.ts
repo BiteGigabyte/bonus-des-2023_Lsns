@@ -21,4 +21,11 @@ export class CarService {
 
     return await this.carRepository.save(car);
   }
+
+  async getCarWithDrivers(carId: number): Promise<Car> {
+    return await this.carRepository.findOne({
+      where: { id: carId },
+      relations: { users: true },
+    });
+  }
 }

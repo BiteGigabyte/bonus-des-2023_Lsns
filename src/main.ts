@@ -19,7 +19,13 @@ async function bootstrap() {
     .addTag('december')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      docExpansion: 'list',
+      defaultModelExpandDepth: 1,
+      persistAuthorization: true,
+    },
+  });
   await app.listen(3000);
 }
 bootstrap();
