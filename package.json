@@ -20,6 +20,11 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "typeorm-ts-node-commonjs --dataSource ./ormconfig.js",
+    "migration:create": "cross-var npm run typeorm -- migration:create ./src/database/migrations/$npm_config_name",
+    "migration:generate": "cross-var npm run typeorm -- migration:generate ./src/database/migrations/$npm_config_name",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -34,6 +39,7 @@
     "bcrypt": "^5.1.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cross-var": "^1.1.0",
     "google-auth-library": "^9.0.0",
     "husky": "^8.0.3",
     "nestjs-typeorm-paginate": "^4.0.4",
