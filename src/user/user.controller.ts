@@ -8,7 +8,7 @@ import {
   Patch,
   Post,
   Query,
-  Req,
+  Req, Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -31,6 +31,7 @@ import {
 } from './dto/user.dto';
 import { PublicUserData } from './interface/user.interface';
 import { UserService } from './user.service';
+import {LogoutGuard} from "../common/guards/logout.guard";
 
 @ApiTags('User')
 @ApiExtraModels(PublicUserData, PaginatedDto)
@@ -60,6 +61,12 @@ export class UserController {
   @Post('login')
   async loginUser(@Body() body: UserloginDto) {
     return this.userService.login(body);
+  }
+
+  @UseGuards(AuthGuard(), LogoutGuard)
+  @Post('logout')
+  async logout(@Res() res: any) {
+    return res.status(HttpStatus.OK).json('logout');
   }
 
   @Post('social/login')

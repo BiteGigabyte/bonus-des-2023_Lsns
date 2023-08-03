@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRedisClient, RedisClient } from '@webeleon/nestjs-redis';
 import * as bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
 
@@ -24,6 +25,7 @@ export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly authService: AuthService,
+    @InjectRedisClient() private redisClient: RedisClient,
   ) {}
 
   async getAllUsers(
@@ -71,6 +73,7 @@ export class UserService {
       );
     }
     const token = await this.singIn(findUser);
+    await this.redisClient.setEx(token, 10000, token);
 
     return { token };
   }
