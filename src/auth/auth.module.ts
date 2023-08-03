@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { RedisModule } from '@webeleon/nestjs-redis';
 
 import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { BearerStrategy } from './bearer.strategy';
-import {RedisModule} from "@webeleon/nestjs-redis";
 
 @Module({
   imports: [

@@ -8,7 +8,8 @@ import {
   Patch,
   Post,
   Query,
-  Req, Res,
+  Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,6 +20,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
+import { LogoutGuard } from '../common/guards/logout.guard';
 import {
   ApiPaginatedResponse,
   PaginatedDto,
@@ -31,7 +33,6 @@ import {
 } from './dto/user.dto';
 import { PublicUserData } from './interface/user.interface';
 import { UserService } from './user.service';
-import {LogoutGuard} from "../common/guards/logout.guard";
 
 @ApiTags('User')
 @ApiExtraModels(PublicUserData, PaginatedDto)
