@@ -12,7 +12,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiExtraModels, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiExtraModels,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import {
   ApiPaginatedResponse,
@@ -33,6 +38,7 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @ApiPaginatedResponse('entities', PublicUserData)
   @Get('list')
@@ -43,7 +49,7 @@ export class UserController {
   @ApiResponse({ status: HttpStatus.CREATED, type: UserCreateDto })
   @Post(':userId/create')
   async createUserAccount(@Req() req: any, @Body() body: UserCreateDto) {
-    return this.userService.createUser(body);
+    return await this.userService.createUser(body);
   }
 
   @Post('account/:userId/animal')

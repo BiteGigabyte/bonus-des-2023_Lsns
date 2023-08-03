@@ -1,11 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
-import { paginateRawAndEntities } from 'nestjs-typeorm-paginate';
-import { Repository } from 'typeorm';
 
 import { AuthService } from '../auth/auth.service';
+import { CarClassEnum } from '../car/model/enum/car-class.enum';
 import { PaginatedDto } from '../common/pagination/response';
 import { PublicUserInfoDto } from '../common/query/user.query.dto';
 import {
@@ -14,7 +12,7 @@ import {
   UserloginSocialDto,
 } from './dto/user.dto';
 import { PublicUserData } from './interface/user.interface';
-import { User } from './user.entity';
+import { UserRepository } from './user.repository';
 
 const GOOGLE_CLIENT_ID = '';
 const GOOGLE_CLIENT_SECRET = '';
@@ -24,51 +22,14 @@ export class UserService {
   // private users = [];
   private salt = 5;
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: UserRepository,
     private readonly authService: AuthService,
   ) {}
 
   async getAllUsers(
     query: PublicUserInfoDto,
   ): Promise<PaginatedDto<PublicUserData>> {
-    query.sort = query.sort || 'id';
-    query.order = query.order || 'ASC';
-    const options = {
-      page: query.page || 1,
-      limit: query.limit || 2, // 50
-    };
-
-    const queryBuilder = this.userRepository
-      .createQueryBuilder('users')
-      .innerJoin('users.animal', 'ani')
-      .select('id, age, email, "userName"');
-
-    if (query.search) {
-      queryBuilder.where('"userName" IN(:...search)', {
-        search: query.search.split(','),
-      });
-    }
-
-    if (query.class) {
-      queryBuilder.andWhere(
-        `LOWER(ani.class) LIKE '%${query.class.toLowerCase()}%'`,
-      );
-    }
-
-    queryBuilder.orderBy(`"${query.sort}"`, query.order as 'ASC' | 'DESC');
-
-    const [pagination, rawResults] = await paginateRawAndEntities(
-      queryBuilder,
-      options,
-    );
-
-    return {
-      page: pagination.meta.currentPage,
-      pages: pagination.meta.totalPages,
-      countItem: pagination.meta.totalItems,
-      entities: rawResults as [PublicUserData],
-    };
+    return await this.userRepository.getAllUsers(query);
   }
 
   async createUser(data: UserCreateDto) {
@@ -134,10 +95,17 @@ export class UserService {
   }
 
   async getOneUserAccount(userId: string) {
-    console.log(userId);
-    // const user = this.users.find((item) => item.id === userId);
-    return 'user';
+    return await this.userRepository.findOne({
+      where: { id: +userId, cars: { class: CarClassEnum.SPORT } },
+      relations: { cars: true, animals: true },
+    });
   }
+  // async getOneUserAccount(userId: string) {
+  //   return await this.userRepository.findOne({
+  //     where: { id: +userId },
+  //     relations: { cars: true },
+  //   });
+  // }
 
   async getHash(password: string) {
     return await bcrypt.hash(password, this.salt);
